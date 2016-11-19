@@ -1,0 +1,3 @@
+#usr/bin/deenes
+#usr/lib/python3
+doc/deenes.service /lib/systemd/system
