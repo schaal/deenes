@@ -1,0 +1,11 @@
+[Unit]
+Description=Monitor IP changes and update Blabladns
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/deenes
+User=deenes
+Group=deenes
+
+[Install]
+WantedBy=multi-user.target
