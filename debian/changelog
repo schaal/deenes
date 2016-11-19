@@ -1,0 +1,6 @@
+deenes (0.1-1) UNRELEASED; urgency=low
+
+  * Initial release. Closes: #nnnn
+    <nnnn is the bug number of your ITP>
+
+ -- Daniel Schaal <daniel@schaal.email>  Sat, 19 Nov 2016 09:34:56 +0100

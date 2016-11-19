@@ -1,0 +1,37 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: deenes
+Source: <url://example.com>
+#
+# Please double check copyright with the licensecheck(1) command.
+
+Files:     .gitignore
+           .vscode/launch.json
+           Deenes.egg-info/PKG-INFO
+           Deenes.egg-info/SOURCES.txt
+           Deenes.egg-info/dependency_links.txt
+           Deenes.egg-info/entry_points.txt
+           Deenes.egg-info/requires.txt
+           Deenes.egg-info/top_level.txt
+           build/lib/src/__init__.py
+           build/lib/src/config.py
+           build/lib/src/deenes.py
+           build/lib/src/ip.py
+           build/scripts-3.5/deenes.py
+           dist/Deenes-0.1-py3.5.egg
+           setup.py
+           src/__init__.py
+           src/__pycache__/__init__.cpython-35.pyc
+           src/__pycache__/ip.cpython-35.pyc
+           src/config.py
+           src/deenes.py
+           src/ip.py
+           tests/__init__.py
+           tests/__pycache__/__init__.cpython-35.pyc
+           tests/__pycache__/iptest.cpython-35.pyc
+           tests/iptest.py
+Copyright: __NO_COPYRIGHT_NOR_LICENSE__
+License:   __NO_COPYRIGHT_NOR_LICENSE__
+
+#----------------------------------------------------------------------------
+# Files marked as NO_LICENSE_TEXT_FOUND may be covered by the following
+# license/copyright files.
