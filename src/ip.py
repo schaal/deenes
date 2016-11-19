@@ -23,7 +23,7 @@ class IP(IPy.IP):
         """Try to update the DNS record with this IP"""
         if not self.is_public():
             notify('STATUS=DNS not changed')
-            return
+            return True
 
         request = requests.get('https://api.blabladns.co/v1/update', params={
             'apikey': apikey,
@@ -36,10 +36,11 @@ class IP(IPy.IP):
             journal.send('Setting IP to {} failed for {} record with {}'.format(
                 self, self.family(), request.status_code), priority=journal.LOG_WARNING)
             notify('STATUS=IP update failed')
-            return
+            return False
 
         notify('STATUS=DNS successfully updated')
         journal.send('DNS successfully updated to {}'.format(self))
+        return True
 
 class IPGetter:
     def get(self):

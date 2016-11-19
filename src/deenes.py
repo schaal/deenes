@@ -25,6 +25,7 @@ class Deenes: # pylint: disable=R0903
         self.ipdb = IPDB()
         self.lock = Lock()
 
+        self.last_ips = {'A': None, 'AAAA': None}
         self.getters = [IPv4Getter(), IPv6Getter()]
         self.cfg = {'apikey': apikey, 'hostname': hostname, 'interface': interface}
 
@@ -39,8 +40,9 @@ class Deenes: # pylint: disable=R0903
 
         for getter in self.getters:
             ip = getter.get()
-            if ip is not None:
-                ip.update(self.cfg['apikey'], self.cfg['hostname'])
+            if ip is not None and ip != self.last_ips[ip.family()]:
+                if ip.update(self.cfg['apikey'], self.cfg['hostname']):
+                    self.last_ips[ip.family()] = ip
 
         self.lock.release()
 
