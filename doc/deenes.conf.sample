@@ -1,0 +1,4 @@
+[api]
+apikey=123456789
+hostname=host
+interface=enp2s0
