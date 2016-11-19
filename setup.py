@@ -11,7 +11,8 @@ setup(
         'pyroute2',
         'systemd-python',
         'IPy',
-        'pyxdg'
+        'pyxdg',
+	'requests'
     ],
     test_suite='tests'
 )
