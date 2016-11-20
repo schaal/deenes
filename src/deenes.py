@@ -20,7 +20,7 @@ class NoConfigError(Exception):
         Exception.__init__(self)
         self.message = message
 
-class Deenes: # pylint: disable=R0903
+class Deenes:
     def __init__(self, apikey: str, hostname: str, interface: str):
         self.event_loop = asyncio.get_event_loop()
         self.ipdb = IPDB()

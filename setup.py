@@ -12,7 +12,8 @@ setup(
         'systemd-python',
         'IPy',
         'pyxdg',
-	'requests'
+        'requests',
+        'requests-mock'
     ],
     test_suite='tests'
 )
