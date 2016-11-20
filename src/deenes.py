@@ -45,7 +45,7 @@ class Deenes: # pylint: disable=R0903
 
         self.lock.release()
 
-    def _cb(self, ipdb, msg, action):
+    def _cb_ipdb(self, ipdb, msg, action):
         if action == 'RTM_NEWADDR' and msg['index'] == self.ipdb.interfaces[self.cfg['interface']]['index']:
             if self.lock.acquire(blocking=False):
                 self.event_loop.call_soon_threadsafe(self._updatedomain)
@@ -65,7 +65,7 @@ class Deenes: # pylint: disable=R0903
 
     def _loop(self):
         notify('READY=1\nSTATUS=Listening to ip address changes...')
-        self.ipdb.register_callback(self._cb)
+        self.ipdb.register_callback(self._cb_ipdb)
 
 def main():
     try:
