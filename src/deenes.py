@@ -7,7 +7,7 @@ import sys
 from threading import Lock
 from configparser import NoOptionError
 
-from pyroute2 import IPDB
+from pyroute2.ipdb import IPDB
 
 from systemd.daemon import notify
 
@@ -15,6 +15,7 @@ from .ip import IPv4Getter, IPv6Getter
 from .config import Config
 
 class NoConfigError(Exception):
+    """Raised when a config value is missing"""
     def __init__(self, message: str):
         Exception.__init__(self)
         self.message = message
@@ -35,8 +36,6 @@ class Deenes: # pylint: disable=R0903
 
     def _updatedomain(self):
         time.sleep(5)
-
-        notify('STATUS=Updating DNS...')
 
         for getter in self.getters:
             ip = getter.get()
@@ -65,7 +64,7 @@ class Deenes: # pylint: disable=R0903
             self.event_loop.close()
 
     def _loop(self):
-        notify('READY=1')
+        notify('READY=1\nSTATUS=Listening to ip address changes...')
         self.ipdb.register_callback(self._cb)
 
 def main():

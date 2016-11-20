@@ -4,7 +4,6 @@ import requests
 
 import IPy
 
-from systemd.daemon import notify
 from systemd import journal
 
 class IP(IPy.IP):
@@ -22,7 +21,6 @@ class IP(IPy.IP):
     def update(self, apikey: str, name: str):
         """Try to update the DNS record with this IP"""
         if not self.is_public():
-            notify('STATUS=DNS not changed')
             return True
 
         request = requests.get('https://api.blabladns.co/v1/update', params={
@@ -35,10 +33,8 @@ class IP(IPy.IP):
         if request.status_code != 200:
             journal.send('Setting IP to {} failed for {} record with {}'.format(
                 self, self.family(), request.status_code), priority=journal.LOG_WARNING)
-            notify('STATUS=IP update failed')
             return False
 
-        notify('STATUS=DNS successfully updated')
         journal.send('DNS successfully updated to {}'.format(self))
         return True
 
