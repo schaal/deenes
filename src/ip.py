@@ -23,9 +23,10 @@ class IP(IPy.IP):
         if not self.is_public():
             return True
 
-        request = requests.get('https://api.blabladns.co/v1/update', params={
+        request = requests.get('https://api.tokendns.co/v1/update', params={
             'apikey': apikey,
             'name': name,
+            'domain': 'blabladns.xyz',
             'content': self.strNormal(),
             'type': self.family()
         })
