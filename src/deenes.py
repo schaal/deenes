@@ -65,6 +65,8 @@ class Deenes:
 
     def _loop(self):
         notify('READY=1\nSTATUS=Listening to ip address changes...')
+        if self.lock.acquire(blocking=False):
+            self.event_loop.call_soon_threadsafe(self._updatedomain)
         self.ipdb.register_callback(self._cb_ipdb)
 
 def main():
