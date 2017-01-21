@@ -4,6 +4,8 @@ import asyncio
 import time
 import sys
 
+from argparse import ArgumentParser
+
 from threading import Lock
 from configparser import NoOptionError
 
@@ -21,10 +23,11 @@ class NoConfigError(Exception):
         self.message = message
 
 class Deenes:
-    def __init__(self, apikey: str, hostname: str, interface: str):
+    def __init__(self, apikey: str, hostname: str, interface: str, simulate: bool):
         self.event_loop = asyncio.get_event_loop()
         self.ipdb = IPDB()
         self.lock = Lock()
+        self.simulate = simulate
 
         self.last_ips = {'A': None, 'AAAA': None}
         self.getters = [IPv4Getter(), IPv6Getter()]
@@ -39,7 +42,9 @@ class Deenes:
 
         for getter in self.getters:
             ip = getter.get()
-            if ip is not None and ip != self.last_ips[ip.family()]:
+            if self.simulate:
+                print(ip)
+            if not self.simulate and ip is not None and ip != self.last_ips[ip.family()]:
                 if ip.update(self.cfg['apikey'], self.cfg['hostname']):
                     self.last_ips[ip.family()] = ip
 
@@ -70,9 +75,16 @@ class Deenes:
         self.ipdb.register_callback(self._cb_ipdb)
 
 def main():
+    parser = ArgumentParser(description='TokenDNS updater')
+    parser.add_argument('--simulate', action='store_true')
+    args = parser.parse_args()
+
     try:
-        cfg = Config()
-        deenes = Deenes(cfg.apikey, cfg.hostname, cfg.interface)
+        if not args.simulate:
+            cfg = Config()
+            deenes = Deenes(cfg.apikey, cfg.hostname, cfg.interface, args.simulate)
+        else:
+            deenes = Deenes('simulate', 'simulate', 'simulate', args.simulate)
         deenes.start()
     except FileNotFoundError as ex:
         print("No configuration found at " + ex.filename)
