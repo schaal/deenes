@@ -13,7 +13,8 @@ setup(
         'IPy',
         'pyxdg',
         'requests',
-        'requests-mock'
+        'requests-mock',
+        'tenacity'
     ],
     test_suite='tests'
 )

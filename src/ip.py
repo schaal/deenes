@@ -5,6 +5,7 @@ import requests
 import IPy
 
 from systemd import journal
+from tenacity import retry, wait_exponential, stop_after_attempt
 
 class IP(IPy.IP):
     def __init__(self, ip: str):
@@ -18,6 +19,8 @@ class IP(IPy.IP):
         """Return A for IPv4 and AAAA for IPv6"""
         return 'A' if self.version() == 4 else 'AAAA'
 
+    @retry(wait=wait_exponential(multiplier=1, max=10),
+           stop=stop_after_attempt(3))
     def update(self, apikey: str, name: str):
         """Try to update the DNS record with this IP"""
         if not self.is_public():
@@ -50,6 +53,8 @@ class IPGetter:
         raise NotImplementedError
 
 class IPv4Getter(IPGetter):
+    @retry(wait=wait_exponential(multiplier=1, max=10),
+           stop=stop_after_attempt(3))
     def _get(self):
         request = requests.post(url='http://fritz.box:49000/igdupnp/control/WANIPConn1', headers={
             'Content-Type': 'text/xml; charset="utf-8"',
@@ -58,6 +63,8 @@ class IPv4Getter(IPGetter):
         return ElementTree.fromstring(request.content).find('.//NewExternalIPAddress').text
 
 class IPv6Getter(IPGetter):
+    @retry(wait=wait_exponential(multiplier=1, max=10),
+           stop=stop_after_attempt(3))
     def _get(self):
         ips = socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET6)
         return [ip[4][0] for ip in ips if ip[1] == socket.SOCK_STREAM][0]

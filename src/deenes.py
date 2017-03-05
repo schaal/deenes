@@ -9,7 +9,7 @@ from argparse import ArgumentParser
 from threading import Lock
 from configparser import NoOptionError
 
-from pyroute2.ipdb import IPDB
+from pyroute2 import IPDB
 
 from systemd.daemon import notify
 
