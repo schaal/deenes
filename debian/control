@@ -2,7 +2,7 @@ Source: deenes
 Section: unknown
 Priority: extra
 Maintainer: Daniel Schaal <daniel@schaal.email>
-Build-Depends: debhelper (>=10), dh-python, python3-all, python3-setuptools, python3-xdg, python3-systemd, python3-ipdb, python3-ipy, python3-pyroute2, python3-requests, python3-requests-mock
+Build-Depends: debhelper (>=10), dh-python, python3-all, python3-setuptools, python3-xdg, python3-systemd, python3-ipy, python3-pyroute2, python3-requests, python3-requests-mock, python3-tenacity
 Standards-Version: 3.9.7
 Homepage: https://github.com/schaal/deenes
 X-Python3-Version: >= 3.2
